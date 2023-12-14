@@ -202,13 +202,13 @@
         "solved": true,
         "result": "110407",
         "attempts": [],
-        "time": 8.836963
+        "time": 2.139708
       },
       "part2": {
-        "solved": false,
-        "result": "96036",
+        "solved": true,
+        "result": "87273",
         "attempts": [],
-        "time": 372.419022
+        "time": 489.198834
       }
     },
     {

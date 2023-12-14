@@ -49,25 +49,38 @@ const part1 = (rawInput: string) => {
 
 const part2 = (rawInput: string) => {
   let input = parseInput(rawInput)
-  for(let i = 0; i < 20; i++) {
+  let sum = 0
+  const map = new Map<string, number>()
+  for(let i = 0; i < 1000000000; i++) {
     input = rollNorth(input)
     input = rollWest(input)
     input = rollNorth(input, true)
     input = rollWest(input, true)
 
+    const inputMapString = input.map(row => row.join('')).join('\n')
 
-    let sum = 0;
-    for(let y = 0; y < input.length; y++) {
-      const value = input.length - y
-      sum += input[y].filter(char => char === "O").length * value
+    if(map.has(inputMapString)) {
+      const index = map.get(inputMapString)
+      const diff = i - index
+      const remaining = 1000000000 - i
+      const remainingModulo = remaining % diff
+      const remainingIndex = index + remainingModulo - 1
+
+      let finalMap = []
+      for (let [key, value] of map.entries()) {
+        if (value === remainingIndex) {
+          finalMap = key.split('\n');
+        }
+      }
+      
+      for(let y = 0; y < finalMap.length; y++) {
+        const value = finalMap.length - y
+        sum += finalMap[y].split('').filter(char => char === "O").length * value
+      }
+      break;
     }
-    console.log(sum)
-  }
-  
-  let sum = 0;
-  for(let y = 0; y < input.length; y++) {
-    const value = input.length - y
-    sum += input[y].filter(char => char === "O").length * value
+
+    map.set(inputMapString, i)
   }
   return sum;
 }
